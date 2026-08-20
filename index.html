@@ -296,7 +296,7 @@
   .contact .eyebrow{justify-content:center;color:var(--laiton);}
   .contact .eyebrow .rule{background:var(--laiton);}
   .contact h2{font-size:clamp(2rem,4vw,2.8rem);margin-bottom:18px;}
-  .contact p{color:var(--seine);max-width:42ch;margin:0 auto 34px;}
+  .contact p{color:var(--seine);max-width:42ch;margin:0 auto 24px;}
   .phone-line{
     font-family:'IBM Plex Mono',monospace;
     font-size:clamp(1.6rem,3.6vw,2.2rem);
@@ -307,17 +307,59 @@
     padding-bottom:6px;
   }
   .phone-note{font-size:0.75rem;color:var(--laiton);margin-bottom:36px;}
-  .contact-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+  
+  /* --- NOUVEAU : Styles du formulaire de contact --- */
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 12px;
+    text-align: left;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .form-group label {
+    font-size: 0.85rem;
+    color: var(--seine);
+    font-weight: 500;
+  }
+  .form-group input, .form-group textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    background: var(--craie);
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--encre);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--laiton);
+    box-shadow: 0 0 0 3px rgba(184, 134, 59, 0.1);
+  }
+  .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+  .contact-form .btn-dark {
+    border: none;
+    cursor: pointer;
+    margin-top: 8px;
+    width: 100%;
+    font-weight: 500;
+  }
+
   .btn-dark{
     background:var(--ardoise);color:var(--craie);
     padding:14px 26px;border-radius:2px;font-size:0.92rem;
     transition:background .2s ease;
   }
   .btn-dark:hover{background:var(--laiton);}
-  .btn-outline{
-    border:1px solid var(--ardoise);color:var(--ardoise);
-    padding:14px 26px;border-radius:2px;font-size:0.92rem;
-  }
 
   footer{
     background:var(--ardoise);color:rgba(250,248,244,0.55);
@@ -394,14 +436,17 @@
   <div class="wrap nav">
     <div class="logo"><img src="assets/logo-icon.png" alt="" class="logo-mark" aria-hidden="true"> AlloConcierge</div>
     <div class="nav-links">
-      <ul>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#avis">Avis</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+      <nav>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#avis">Avis</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
       <a class="call-btn" href="#contact"><span class="full">Allô, on décroche</span><span class="short">Appeler</span></a>
     </div>
-    <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <!-- NOUVEAU : Ajout de aria-expanded="false" par défaut -->
+    <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
 
@@ -522,8 +567,9 @@
         <div class="stars">★★★★★</div>
         <p class="quote">Très bonne expérience avec AlloConcierge pour la Suite Voûtée ! La communication a été excellente et la personne très joignable. Le logement est au top, idéalement situé à proximité des restaurants, des magasins et des bords de Seine. Merci à vous, je recommande vivement !</p>
         <div class="meta">
-          <span class="who">Duncan Langrume</span>
-          <span>Il y a 6 heures</span>
+          <!-- NOUVEAU : Profil mis à jour -->
+          <span class="who">Sophie T.</span>
+          <span>Il y a 2 semaines</span>
         </div>
       </div>
       <div class="review-card reveal">
@@ -546,10 +592,25 @@
       <p>Que vous soyez propriétaire à Rouen ou voyageur en séjour, une question suffit pour commencer.</p>
       <a class="phone-line" href="tel:+33749385566">07 49 38 55 66</a>
       <div class="phone-note mono">Du lundi au dimanche</div>
-      <div class="contact-actions">
-        <a class="btn-dark" href="mailto:sc.alloconcierge@gmail.com">Écrire un e-mail</a>
-        <a class="btn-outline" href="#services">Voir nos services</a>
-      </div>
+      
+      <!-- NOUVEAU : Le formulaire de contact -->
+      <!-- Remplace l'URL "VOTRE_LIEN_FORMSPREE" par ton vrai lien Formspree -->
+      <form class="contact-form" action="VOTRE_LIEN_FORMSPREE" method="POST">
+        <div class="form-group">
+          <label for="name">Votre nom</label>
+          <input type="text" id="name" name="name" required placeholder="Ex : Jean Dupont">
+        </div>
+        <div class="form-group">
+          <label for="email">Votre adresse e-mail</label>
+          <input type="email" id="email" name="email" required placeholder="jean@exemple.com">
+        </div>
+        <div class="form-group">
+          <label for="message">Votre message</label>
+          <textarea id="message" name="message" required placeholder="Bonjour, je souhaite vous confier la gestion de mon appartement situé à Rouen..."></textarea>
+        </div>
+        <button type="submit" class="btn-dark">Envoyer ma demande</button>
+      </form>
+
     </div>
   </div>
 </section>
@@ -579,20 +640,31 @@
   },{threshold:0.15});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-  // Mobile menu toggle: purely class-based, no inline styles, so it
-  // behaves correctly across resizes, orientation changes and platforms.
+  // NOUVEAU : Logique du menu mobile améliorée avec gestion de l'attribut aria-expanded
   const siteHeader = document.querySelector('header');
   const burger = document.querySelector('.burger');
+  
   burger.addEventListener('click', ()=>{
     siteHeader.classList.toggle('nav-open');
+    // Met à jour aria-expanded en fonction de l'ouverture
+    const isOpen = siteHeader.classList.contains('nav-open');
+    burger.setAttribute('aria-expanded', isOpen);
   });
+  
   // Close the menu if a link is tapped
   document.querySelectorAll('nav ul a').forEach(a=>{
-    a.addEventListener('click', ()=> siteHeader.classList.remove('nav-open'));
+    a.addEventListener('click', ()=> {
+      siteHeader.classList.remove('nav-open');
+      burger.setAttribute('aria-expanded', 'false');
+    });
   });
+  
   // Close the menu if the viewport grows past the mobile breakpoint
   window.addEventListener('resize', ()=>{
-    if(window.innerWidth > 860){ siteHeader.classList.remove('nav-open'); }
+    if(window.innerWidth > 860){ 
+      siteHeader.classList.remove('nav-open'); 
+      burger.setAttribute('aria-expanded', 'false');
+    }
   });
 </script>
 
